@@ -4,11 +4,14 @@
 gradlew makeJar
 
 如果是引用jar包使用需要在工程中加入以下依赖
+```
     api 'com.squareup.retrofit2:converter-gson:2.6.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     api 'io.reactivex.rxjava2:rxjava:2.2.6'
+```
+    
     
     使用方法：
     1、工程中定义一个网络类继承NetworkApi实现模板方法
