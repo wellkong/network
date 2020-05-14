@@ -76,7 +76,7 @@ public abstract class NetworkApi implements IEnvironment {
     public static void init(INetworkRequiredInfo networkRequiredInfo) {
         iNetworkRequiredInfo = networkRequiredInfo;
         mIsFormal = EnvironmentActivity.isOfficialEnvironment(networkRequiredInfo.getApplicationContext());
-        Log.e(TAG,"mIsFormal="+mIsFormal);
+        Log.i(TAG,"mIsFormal="+mIsFormal);
 
     }
 
