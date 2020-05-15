@@ -14,7 +14,7 @@ import com.willkong.networkdemo.mvp.utils.DialogUtils;
  * @Package: com.willkong.networkdemo.mvp.base
  * @Author: willkong
  * @CreateDate: 2020/5/14 12:47
- * @Description: java类作用描述
+ * @Description: Fragment基类
  */
 public abstract class BaseMvpFragment<V extends BaseView, P extends BasePresenter<V>> extends Fragment implements BaseView {
 
