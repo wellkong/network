@@ -51,7 +51,7 @@ public class BasePresenter<V extends BaseView> {
      * 一般情况 要么都包裹要么都不包裹
      */
     protected <T> void subscribe(final Observable<T> observable, final RequestCallback<T> requestCallback) {
-        if (checkedNetWork(MyApplication.getContext())) {
+        if (checkedNetWork(MyApplication.instance())) {
             observable.subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

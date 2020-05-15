@@ -1,11 +1,12 @@
 package com.willkong.networkdemo.application;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
 
 import com.willkong.network.NetworkApi;
 import com.willkong.networkdemo.api.NetworkRequiredInfo;
+import com.willkong.networkdemo.dragger2.component.AppComponent;
+import com.willkong.networkdemo.dragger2.component.DaggerAppComponent;
+import com.willkong.networkdemo.dragger2.module.AppModule;
 
 /**
  * @ProjectName: NetWorkDemo
@@ -15,14 +16,34 @@ import com.willkong.networkdemo.api.NetworkRequiredInfo;
  * @Description: java类作用描述
  */
 public class MyApplication extends Application {
-    @SuppressLint("StaticFieldLeak")
-    private static Context context;
+    //全局单例 注入器 并给其他注入器提供依赖
+    private AppComponent appComponent;
+
+    public static MyApplication mInstance;
+
+    public static MyApplication instance() {
+        return mInstance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mInstance = this;
+        initAppComponent();
         NetworkApi.init(new NetworkRequiredInfo(MyApplication.this));
     }
-    public static Context getContext() {
-        return context;
+
+    /**
+     * 初始化依赖注入容器
+     */
+    public void initAppComponent() {
+        appComponent = DaggerAppComponent
+                .builder()
+                .appModule(new AppModule(this))
+                .build();
+    }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 }
