@@ -19,6 +19,7 @@ import com.willkong.network.utils.ApiDns;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -105,8 +106,11 @@ public abstract class NetworkApi implements IEnvironment {
     private OkHttpClient getOkHttpClient() {
         if (okHttpClient == null) {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
-            if (getInterceptor()!=null){
-                okHttpClientBuilder.addInterceptor(getInterceptor());
+            if (getInterceptor()!=null&&getInterceptor().size()>0){
+                List<Interceptor> list = getInterceptor();
+                for (int i = 0; i <list.size(); i++) {
+                    okHttpClientBuilder.addInterceptor(list.get(i));
+                }
             }
             okHttpClientBuilder.addInterceptor(new CommonRequestInterceptor(iNetworkRequiredInfo));
             okHttpClientBuilder.addInterceptor(new CommonResponseInterceptor());
@@ -192,7 +196,7 @@ public abstract class NetworkApi implements IEnvironment {
         return gson;
     }
 
-    protected abstract Interceptor getInterceptor();
+    protected abstract List<Interceptor> getInterceptor();
 
     protected abstract <T> Function<T, T> getAppErrorHandler();
 
