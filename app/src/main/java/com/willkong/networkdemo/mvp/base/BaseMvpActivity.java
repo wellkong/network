@@ -2,11 +2,14 @@ package com.willkong.networkdemo.mvp.base;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.willkong.netstatusbus.NetWorkMonitorManager;
+import com.willkong.netstatusbus.NetWorkState;
 import com.willkong.networkdemo.application.MyApplication;
 import com.willkong.networkdemo.dragger2.component.AppComponent;
 import com.willkong.networkdemo.eventbus.BaseEventbusBean;
@@ -74,6 +77,17 @@ public abstract class BaseMvpActivity<V extends BaseView, P extends BasePresente
     protected void onEvent(BaseEventbusBean event) {
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        NetWorkMonitorManager.getInstance().register(BaseMvpActivity.this);
+    }
+    //不加注解默认监听所有的状态，方法名随意，只需要参数是一个NetWorkState即可
+//@NetWorkMonitor(monitorFilter = {NetWorkState.GPRS})//只接受网络状态变为GPRS类型的消息
+    public void onNetWorkStateChange(NetWorkState netWorkState) {
+        Log.i("TAG", "onNetWorkStateChange >>> :" + netWorkState.name());
+    }
     @Override
     protected void onDestroy() {
         unbinder.unbind();
@@ -84,6 +98,7 @@ public abstract class BaseMvpActivity<V extends BaseView, P extends BasePresente
         if (regEvent) {
             EventBus.getDefault().unregister(this);
         }
+        NetWorkMonitorManager.getInstance().unregister(this);
     }
 
     @Override

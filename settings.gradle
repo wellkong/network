@@ -1,3 +1,4 @@
 rootProject.name='NetWorkDemo'
 include ':app'
 include ':network'
+include ':netstatusbus'

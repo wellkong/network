@@ -838,3 +838,20 @@ dagger中Component就是最顶级的入口，dagger为之生成了工厂类 Dagg
     void inject(TestActivity testActivity);}
 ```
 
+网络监听工具的使用步骤：
+1、Application的onCreate方法中初始化
+NetWorkMonitorManager.getInstance().init(this);
+2、在使用的地方添加回调方法
+    //不加注解默认监听所有的状态，方法名随意，只需要参数是一个NetWorkState即可
+//    @NetWorkMonitor(monitorFilter = {NetWorkState.NONE})//只接受网络状态变为GPRS类型的消息
+    public void onNetWorkStateChange(NetWorkState netWorkState) {
+        Log.i("TAG", "onNetWorkStateChange >>> :" + netWorkState.name());
+    }
+
+3、在onStart方法中注册绑定
+NetWorkMonitorManager.getInstance().register(this);
+4、在onDestroy方法解除绑定
+NetWorkMonitorManager.getInstance().unregister(this);
+
+
+

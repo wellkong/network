@@ -12,6 +12,7 @@ import android.telephony.TelephonyManager;
  * @CreateDate: 2020/5/12 16:50
  * @Description: 网络工具类
  */
+@SuppressWarnings("deprecation")
 public class NetworkUtils {
 
     /**

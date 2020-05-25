@@ -72,11 +72,7 @@ public class ExceptionHandler {
             ex = new ResponeThrowable(e, ERROR.SSL_ERROR);
             ex.message = "证书验证失败";
             return ex;
-        } else if (e instanceof ConnectTimeoutException) {
-            ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
-            ex.message = "连接超时";
-            return ex;
-        } else if (e instanceof SocketTimeoutException) {
+        } else if (e instanceof ConnectTimeoutException || e instanceof SocketTimeoutException) {
             ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
             ex.message = "连接超时";
             return ex;
@@ -90,7 +86,7 @@ public class ExceptionHandler {
     /**
      * 约定异常
      */
-    public class ERROR {
+    public static class ERROR {
         /**
          * 未知错误
          */
@@ -115,25 +111,6 @@ public class ExceptionHandler {
          * 连接超时
          */
         public static final int TIMEOUT_ERROR = 1006;
-    }
-
-    public static class ResponeThrowable extends Exception {
-        public int code;
-        public String message;
-
-        public ResponeThrowable(Throwable throwable, int code) {
-            super(throwable);
-            this.code = code;
-        }
-
-        /**
-         * 重写信息返回方法
-         * @return
-         */
-        @Override
-        public String getMessage() {
-            return message;
-        }
     }
 
     public static class ServerException extends RuntimeException {

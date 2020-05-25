@@ -2,6 +2,7 @@ package com.willkong.networkdemo.application;
 
 import android.app.Application;
 
+import com.willkong.netstatusbus.NetWorkMonitorManager;
 import com.willkong.network.NetworkApi;
 import com.willkong.networkdemo.api.NetworkRequiredInfo;
 import com.willkong.networkdemo.dragger2.component.AppComponent;
@@ -31,6 +32,7 @@ public class MyApplication extends Application {
         mInstance = this;
         initAppComponent();
         NetworkApi.init(new NetworkRequiredInfo(MyApplication.this));
+        NetWorkMonitorManager.getInstance().init(this);
     }
 
     /**

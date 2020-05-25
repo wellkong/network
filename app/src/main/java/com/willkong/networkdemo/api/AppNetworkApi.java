@@ -6,6 +6,8 @@ import com.willkong.network.errorhandler.ExceptionHandler;
 import com.willkong.network.utils.TecentUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.functions.Function;
 import okhttp3.Interceptor;
@@ -46,8 +48,8 @@ public class AppNetworkApi extends NetworkApi {
     }
 
     @Override
-    protected Interceptor getInterceptor() {
-        return new Interceptor() {
+    protected List<Interceptor> getInterceptor() {
+        Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 String timeStr = TecentUtil.getTimeStr();
@@ -58,6 +60,9 @@ public class AppNetworkApi extends NetworkApi {
                 return chain.proceed(builder.build());
             }
         };
+        List<Interceptor> list = new ArrayList<>();
+        list.add(interceptor);
+        return list;
     }
 
     /**
