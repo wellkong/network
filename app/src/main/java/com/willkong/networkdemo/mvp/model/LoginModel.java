@@ -24,16 +24,27 @@ public class LoginModel extends BaseImpl<AppApiInterface> implements LoginContra
     @Override
     public void login(String nos, String signature, long timestamp, final RequestCallback<DataBean> callback) {
         mService.getTopNews(nos, signature, timestamp)
-                .compose(AppNetworkApi.getInstance().applySchedulers(new BaseObserver() {
+                .subscribe(new BaseObserver<BaseResponse<DataBean>>() {
                     @Override
-                    public void onSuccess(Object o) {
-                        callback.onSuccess(((BaseResponse<DataBean>) o).data);
+                    public void onSuccess(BaseResponse<DataBean> dataBeanBaseResponse) {
+                        callback.onSuccess(dataBeanBaseResponse.data);
                     }
 
                     @Override
                     public void onFailure(Throwable e) {
                         callback.onFailure(e.getMessage());
                     }
-                }));
+                });
+//                .compose(AppNetworkApi.getInstance().applySchedulers(new BaseObserver() {
+//                    @Override
+//                    public void onSuccess(Object o) {
+//                        callback.onSuccess(((BaseResponse<DataBean>) o).data);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Throwable e) {
+//                        callback.onFailure(e.getMessage());
+//                    }
+//                }));
     }
 }

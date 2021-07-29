@@ -91,7 +91,8 @@ public abstract class NetworkApi implements IEnvironment {
 //        retrofitBuilder.addConverterFactory(GsonConverterFactory.create());
         retrofitBuilder.addConverterFactory(GsonConverterFactory.create(buildGson()));//添加json转换框架(正常转换框架)
 //        retrofitBuilder.addConverterFactory(MyGsonConverterFactory.create(buildGson()));//添加json自定义（根据需求，此种方法是拦截gson解析所做操作）
-        retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+//        retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+        retrofitBuilder.addCallAdapterFactory(WillkongRxJava2CallAdapterFactory.create(getAppErrorHandler()));
         Retrofit retrofit = retrofitBuilder.build();
         retrofitHashMap.put(mBaseUrl + service.getName(), retrofit);
         return retrofit;
